@@ -1,0 +1,15 @@
+* Allow to change root password after first run.
+* Create a mysql_cnf_file action plugin to allow for a mechanism to provide conf.d settings files.
+* Provide a role variable to feed mysql_cnf_file in config.yml (similar to 'services' in corosync).
+
+Example:
+
+```yaml
+mysql_cnf_file:
+args:
+  name: 
+  priority: 20 by default
+  section: client|mysqld_safe|mysqld|mysqldump|mysql|isamchk
+  settings: key/value or a blob of text?
+```
+

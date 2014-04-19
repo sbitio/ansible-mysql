@@ -1,0 +1,7 @@
+To relaunch the bootstrap process it is needed to remove all traces of mysql:
+
+```sh
+yum remove -y mysql-libs
+rm -rf /var/lib/mysql/ /etc/my*
+```
+
