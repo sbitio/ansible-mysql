@@ -1,0 +1,21 @@
+---
+- name: Ensure my.cnf
+  template: src={{ item }} dest={{ mysql_file_conf }} backup=no owner=root group=root mode=0644
+  first_available_file:
+    - "my.cnf.{{ ansible_os_family }}.j2"
+    - "my.cnf.conf.default.j2"
+  notify:
+    - restart mysql
+
+#TODO# leverage mysql_cnf_file. Move out of the rol. Document in README.md
+- name: Ensure replication config file
+  template: src=repl.cnf.j2 dest=/etc/mysql/conf.d/00_repl.cnf backup=no owner=root group=root mode=0644
+  when: mysql_repl_role is defined
+  notify:
+    - restart mysql
+
+#TODO#
+#- name: Add extra settings
+#  mysql_cnf_file: {{ item }}
+#  with_items: settings
+

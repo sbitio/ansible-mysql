@@ -1,0 +1,14 @@
+---
+- name: Ensure yum packages
+  yum: pkg={{ item }} state={{ mysql_package_state }}
+  with_items: mysql_packages
+  tags:
+    - mysql
+    - setup
+
+- name: Create /etc/mysql/conf.d
+  file: path=/etc/mysql/conf.d state=directory
+  tags:
+    - mysql
+    - setup
+

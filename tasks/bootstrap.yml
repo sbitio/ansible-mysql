@@ -1,0 +1,60 @@
+---
+# Useful for debugging.
+- name: Cleanup previous attempt to bootstrap
+  file: path=~/.my.cnf state=absent
+
+# Start the service so we can perform bootstrap operations.
+- name: Start mysql for bootstrap
+  service: name={{ mysql_service }} state=started
+
+# Note: Change password for root@localhost last, to not loose access to mysql.
+- name: Set root password
+  mysql_user: name=root host={{ item }} password={{ mysql_root_db_pass }}
+  with_items:
+   - "{{ ansible_hostname }}"
+   - 127.0.0.1
+   - ::1
+   - localhost
+  when: mysql_root_db_pass is defined
+
+- name: Copy .my.cnf file with root password credentials
+  template: src=.my.cnf.j2 dest=~/.my.cnf mode=0600
+  when: mysql_root_db_pass is defined
+
+- name: Remove test database
+  mysql_db: name=test state=absent
+
+- name: Create replication user
+  mysql_user:
+  args:
+    name     : "{{ mysql_repl_user.name }}"
+    host     : "%"
+    password : "{{ mysql_repl_user.pass }}"
+    priv     : "*.*:REPLICATION SLAVE"
+  when: mysql_repl_role == 'master'
+
+- name: Get master status
+  mysql_replication : mode=getmaster
+  delegate_to       : "{{ mysql_repl_master }}"
+  register          : repl_stat
+  when              : mysql_repl_role == 'slave'
+
+- name: Set master in slave
+  mysql_replication: mode=changemaster
+  args:
+    master_host     : "{{ mysql_repl_master }}"
+    master_log_file : "{{ repl_stat.File }}"
+    master_log_pos  : "{{ repl_stat.Position }}"
+    master_user     : "{{ mysql_repl_user.name }}"
+    master_password : "{{ mysql_repl_user.pass }}"
+  when: mysql_repl_role == 'slave'
+
+- name: Start slave
+  mysql_replication: mode=startslave
+  when: mysql_repl_role == 'slave'
+
+# Stop the service after bootstrap, only if the service is stopped by default.
+- name: Stop mysql after bootstrap
+  service: name={{ mysql_service }} state=stopped
+  when: mysql_is_installed|failed and mysql_service_state == 'stopped'
+

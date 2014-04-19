@@ -1,0 +1,21 @@
+---
+mysql_service_enabled: yes
+mysql_service_state: started
+mysql_package_state: present
+
+mysql_bind_address: 127.0.0.1
+
+#mysql_root_db_pass:
+
+#mysql_server_id: <number>
+#mysql_repl_role: master|slave
+#mysql_repl_master: <ip>
+
+# User/pass used for replication.
+#mysql_repl_user:
+#  name:
+#  pass:
+
+# Switch to skip declaration of monit check.
+mysql_monit_skip: no
+

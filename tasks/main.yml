@@ -1,0 +1,49 @@
+---
+# We need to check if mysql is already installed or not,
+# in order to perform first-time configuration.
+- name: Check if mysql is installed
+  shell: test -x /usr/bin/mysqld_safe
+  ignore_errors: True
+  register: mysql_is_installed
+
+# We also need to check if mysql is running.
+- name: Check if mysql is running
+  shell: service mysqld status
+  register: mysql_is_running
+
+- name: OS specific variables
+  include_vars: "{{ ansible_os_family }}.yml"
+  tags:
+    - mysql
+    - setup
+    - service
+    - config
+
+# Os specific installation.
+- include: setup-Debian.yml
+  when: "ansible_os_family == 'Debian'"
+
+- include: setup-RedHat.yml
+  when: "ansible_os_family == 'RedHat'"
+
+# Geeral service configuration.
+- include: config.yml
+  tags:
+    - mysql
+    - config
+
+# First-time configuration.
+- include: bootstrap.yml
+  when: mysql_is_installed|failed
+
+# Service behaviour.
+- include: service.yml
+
+# Monit.
+- name: Configure mysql service in Monit
+  action: monit_check
+  args:
+    type: service
+    name: mysql
+  when: monit_service is defined and mysql_monit_skip is not false
+
