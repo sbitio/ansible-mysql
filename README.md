@@ -7,8 +7,6 @@ Leverages [sbitmedia.monit](https://galaxy.ansible.com/list#/roles/729) if prese
 
 This role is Work In Progress. See [`TODO` file](TODO) for some details.
 
-Some ideas picked from [bennojoy.mysql](https://galaxy.ansible.com/list#/roles/1) role.
-
 Role Variables
 --------------
 
@@ -21,7 +19,7 @@ Example Playbook
 ```yaml
 - hosts: dbservers
   roles:
-    - mysql
+    - sbitmedia.mysql
 ```
 
 License
@@ -33,4 +31,9 @@ Author Information
 ------------------
 
 Jonathan Araña Cruz - SB IT Media, S.L.
+
+Credits
+-------
+
+Some ideas picked from [bennojoy.mysql](https://galaxy.ansible.com/list#/roles/1) role.
 

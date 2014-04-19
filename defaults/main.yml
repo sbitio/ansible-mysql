@@ -1,12 +1,16 @@
 ---
-mysql_service_enabled: yes
-mysql_service_state: started
 mysql_package_state: present
 
-mysql_bind_address: 127.0.0.1
+# Wether the service must be configurd to start on boot.
+mysql_service_enabled: yes
 
+# Desired state of the service. When undefined stated won't be set.
+#mysql_service_state: started
+
+mysql_bind_address: 127.0.0.1
 #mysql_root_db_pass:
 
+# Replication settings.
 #mysql_server_id: <number>
 #mysql_repl_role: master|slave
 #mysql_repl_master: <ip>
@@ -16,6 +20,6 @@ mysql_bind_address: 127.0.0.1
 #  name:
 #  pass:
 
-# Switch to skip declaration of monit check.
+# Switch to skip configuration of monit check.
 mysql_monit_skip: no
 
