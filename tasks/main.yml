@@ -8,7 +8,8 @@
 
 # We also need to check if mysql is running.
 - name: Check if mysql is running
-  shell: service mysqld status
+  command: service mysqld status
+  ignore_errors: True
   register: mysql_is_running
 
 - name: OS specific variables
