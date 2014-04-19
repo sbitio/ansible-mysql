@@ -1,6 +1,6 @@
 ---
 
-# Only restart the service when it is or intented to be running.
+# Only restart the service if it was already running or it is intented to be.
 - name: restart mysql
   service: name={{ mysql_service }} state=restarted
   when: mysql_service_state == 'started' or mysql_is_running|success
