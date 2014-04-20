@@ -9,7 +9,4 @@
 
 - name: Ensure service boot status
   service: name={{ mysql_service }} enabled={{ mysql_service_enabled }}
-  tags:
-   - mysql
-   - service
 

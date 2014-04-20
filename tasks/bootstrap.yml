@@ -53,8 +53,8 @@
   mysql_replication: mode=startslave
   when: mysql_repl_role == 'slave'
 
-# Stop the service after bootstrap, only if the service is stopped by default.
+# Stop the service after bootstrap, only if configured to be stopped.
 - name: Stop mysql after bootstrap
   service: name={{ mysql_service }} state=stopped
-  when: mysql_is_installed|failed and mysql_service_state == 'stopped'
+  when: mysql_service_state == 'stopped'
 

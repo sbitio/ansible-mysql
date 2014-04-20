@@ -1,7 +1,7 @@
 ---
 mysql_package_state: present
 
-# Wether the service must be configurd to start on boot.
+# Wether the service must be configured to start on boot.
 mysql_service_enabled: yes
 
 # Desired state of the service. When undefined stated won't be set.
@@ -10,12 +10,14 @@ mysql_service_enabled: yes
 mysql_bind_address: 127.0.0.1
 #mysql_root_db_pass:
 
+
 # Replication settings.
+
 #mysql_server_id: <number>
 #mysql_repl_role: master|slave
 #mysql_repl_master: <ip>
 
-# User/pass used for replication.
+# Credentials for the replication user.
 #mysql_repl_user:
 #  name:
 #  pass:

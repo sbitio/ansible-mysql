@@ -39,6 +39,9 @@
 
 # Service behaviour.
 - include: service.yml
+  tags:
+   - mysql
+   - service
 
 # Monit.
 - name: Configure mysql service in Monit
