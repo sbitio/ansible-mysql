@@ -1,8 +1,16 @@
 ---
+- name: OS specific variables
+  include_vars: "{{ ansible_os_family }}.yml"
+  tags:
+    - mysql
+    - setup
+    - service
+    - config
+
 # We need to check if mysql is already installed or not,
 # in order to perform first-time configuration.
 - name: Check if mysql is installed
-  shell: test -x /usr/bin/mysqld_safe
+  shell: test -x {{ mysql_binary }}
   ignore_errors: True
   register: mysql_is_installed
 
@@ -11,14 +19,6 @@
   command: service mysqld status
   ignore_errors: True
   register: mysql_is_running
-
-- name: OS specific variables
-  include_vars: "{{ ansible_os_family }}.yml"
-  tags:
-    - mysql
-    - setup
-    - service
-    - config
 
 # Os specific installation.
 - include: setup-Debian.yml

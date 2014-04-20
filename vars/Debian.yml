@@ -8,4 +8,5 @@ mysql_service: mysql
 mysql_file_conf: /etc/mysql/my.cnf
 mysql_pid_file: /var/run/mysqld/mysqld.pid
 mysql_socket: /var/run/mysqld/mysqld.sock
+mysql_binary: /usr/sbin/mysqld
 
