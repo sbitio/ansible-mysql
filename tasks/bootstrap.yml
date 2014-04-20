@@ -9,17 +9,17 @@
 
 # Note: Change password for root@localhost last, to not loose access to mysql.
 - name: Set root password
-  mysql_user: name=root host={{ item }} password={{ mysql_root_db_pass }}
+  mysql_user: name=root host={{ item }} password={{ mysql_root_pass }}
   with_items:
    - "{{ ansible_hostname }}"
    - 127.0.0.1
    - ::1
    - localhost
-  when: mysql_root_db_pass is defined
+  when: mysql_root_pass is defined
 
 - name: Copy .my.cnf file with root password credentials
   template: src=.my.cnf.j2 dest=~/.my.cnf mode=0600
-  when: mysql_root_db_pass is defined
+  when: mysql_root_pass is defined
 
 - name: Remove test database
   mysql_db: name=test state=absent

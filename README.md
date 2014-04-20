@@ -26,7 +26,7 @@ for master-slave replication:
 
 `group_vars/dbservers`:
 ```yaml
-mysql_root_db_pass: <secret>
+mysql_root_pass: <secret>
 mysql_repl_user:
   name: repl
   pass: <secret>
