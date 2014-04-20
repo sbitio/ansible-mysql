@@ -2,10 +2,7 @@
 
 - name: Ensure service is started/stopped
   service: name={{ mysql_service }} state={{ mysql_service_state }}
-  when: mysql_service_state is defined
-  tags:
-   - mysql
-   - service
+  when: mysql_service_state != 'undef'
 
 - name: Ensure service boot status
   service: name={{ mysql_service }} enabled={{ mysql_service_enabled }}

@@ -4,8 +4,8 @@ mysql_package_state: present
 # Wether the service must be configured to start on boot.
 mysql_service_enabled: yes
 
-# Desired state of the service. When undefined stated won't be set.
-#mysql_service_state: started
+# Desired state of the service. Set it to 'undef' to skip this setup in Ansible.
+mysql_service_state: started
 
 mysql_bind_address: 127.0.0.1
 #mysql_root_db_pass:
