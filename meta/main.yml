@@ -1,7 +1,7 @@
 ---
 galaxy_info:
   author: Jonathan Araña Cruz
-  description: Setup Mysql, optionally with a master-slave replication setup.
+  description: Manage MySQL. Supports master-slave replication setup.
   company: SB IT Media, S.L.
   license: license BSD
   min_ansible_version: 1.5
