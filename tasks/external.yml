@@ -1,0 +1,6 @@
+---
+- include: external/monit.yml
+  when: monit_service is defined and mysql_monit_skip == false
+  tags:
+   - monit
+

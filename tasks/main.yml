@@ -43,11 +43,9 @@
    - mysql
    - service
 
-# Monit.
-- name: Configure mysql service in Monit
-  action: monit_check
-  args:
-    type: service
-    name: mysql
-  when: monit_service is defined and mysql_monit_skip is not false
+# Integration with external services.
+- include: external.yml
+  tags:
+   - mysql
+   - external
 
